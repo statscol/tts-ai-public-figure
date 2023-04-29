@@ -12,6 +12,9 @@ from TTS.tts.models.tacotron2 import Tacotron2
 from TTS.tts.utils.text.tokenizer import TTSTokenizer
 from TTS.utils.audio import AudioProcessor
 #import wandb 
+import logging
+logger=logging.getLogger("train_vits_recipe")
+logger.setLevel(logging.INFO)
 
 DEFAULT_SAMPLE_RATE=16000
 DEFAULT_DRIVE_FOLDER="tts-ai-results/"
@@ -87,7 +90,8 @@ train_samples, eval_samples = load_tts_samples(
 )
 
 
-#model = Tacotron2(config, ap, tokenizer, speaker_manager=None)
+logger.info(f"Resulting data partitions:\t Train:{len(train_samples)} audios \t Val: {len(eval_samples)} audios")
+
 model=Vits(config, ap, tokenizer, speaker_manager=None)
 
 

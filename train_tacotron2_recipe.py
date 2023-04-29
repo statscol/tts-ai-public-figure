@@ -3,22 +3,23 @@ import os
 from trainer import Trainer, TrainerArgs
 from TTS.tts.configs.glow_tts_config import GlowTTSConfig
 from TTS.tts.configs.tacotron2_config import Tacotron2Config
-from TTS.tts.models.vits import Vits, VitsAudioConfig
 from TTS.tts.configs.shared_configs import BaseDatasetConfig,CharactersConfig
 from TTS.tts.datasets import load_tts_samples
-from TTS.tts.configs.vits_config import VitsConfig
-from TTS.tts.models.glow_tts import GlowTTS
 from TTS.tts.models.tacotron2 import Tacotron2
 from TTS.tts.utils.text.tokenizer import TTSTokenizer
 from TTS.utils.audio import AudioProcessor
+import logging
+logger=logging.getLogger("train_tacotron2_recipe")
+logger.setLevel(logging.INFO)
+
 #import wandb 
 
 DEFAULT_SAMPLE_RATE=16000
-DEFAULT_DRIVE_FOLDER="tts-ai-results/"
+DEFAULT_DRIVE_FOLDER="/workspace/project/tts-ai-public-figure/tts-ai-checkpoints/"
 os.makedirs(DEFAULT_DRIVE_FOLDER, exist_ok=True)
 
 
-data_path="tts-ai-public-figure/"
+data_path="/workspace/project/tts-ai-public-figure/"
 
 characters_conf=CharactersConfig(
         pad="<PAD>",
@@ -29,6 +30,7 @@ characters_conf=CharactersConfig(
         punctuations="!¡'(),-.:;¿?",
     )
 
+#wandb did not work in the TTS Trainer
 #wandb.login() ##use open session to log in
 
 project = "tts-petro-ai"
@@ -46,7 +48,7 @@ dataset_config = BaseDatasetConfig(
 config = Tacotron2Config(
     run_name=display_name,
     project_name=project,
-    batch_size=16,
+    batch_size=12,
     eval_batch_size=8,
     num_loader_workers=4,
     num_eval_loader_workers=4,
@@ -54,8 +56,8 @@ config = Tacotron2Config(
     test_delay_epochs=-1,
     save_checkpoints=True,
     save_n_checkpoints=2,
-    save_best_after=1000,
-    epochs=500,
+    save_best_after=200,
+    epochs=600,
     characters=characters_conf,
     text_cleaner="spanish_cleaners",
     use_phonemes=True,
@@ -86,6 +88,7 @@ train_samples, eval_samples = load_tts_samples(
     eval_split_size=config.eval_split_size,
 )
 
+logger.info(f"Resulting data partitions:\t Train:{len(train_samples)} audios \t Val: {len(eval_samples)} audios")
 
 model = Tacotron2(config, ap, tokenizer, speaker_manager=None)
 #model=Vits(config, ap, tokenizer, speaker_manager=None)
