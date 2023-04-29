@@ -1,4 +1,4 @@
-# TTS-AI-PUBLIC-FIGURE
+# TTS-ai-public-figure
 
 Training Text-to-speech using a public figure (Colombia's president Gustavo Petro) videos of public press conferences and speeches available online (mostly on youtube). This repo shows how to use the TTS library to train a custom voice model from a public figure voice. The following models were tested:
 
