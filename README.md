@@ -13,4 +13,23 @@ The dataset was obtained manually, by pulling videos from youtube and partitioni
 
 
 
+## Setup environment
 
+The TTS library had a small bug when creating this repo, for that reason i had to modify the formatters and cleanners module in order to use custom datasets and cleaners. You can install my forked version using the setup_env.sh. However, feel free to install the latest TTS release (`pip install TTS`).
+
+
+```bash
+chmod +x setup_env.sh
+./setup_env.sh
+```
+
+
+## Training 
+
+Run the config_data.py script, then use one of the recipes. Make sure to adjust your file paths (see variable `DEFAULT_DRIVE_FOLDER` in training scripts)
+
+
+```bash
+python3 config_data.py
+python3 train_vits_recipe.py
+```
