@@ -32,7 +32,7 @@ python3 config_data.py
 python3 train_vits_recipe.py
 ```
 
-# Inference
+## Inference
 
 Use TTS build-in script for inference. It is recommended to use audio-denoising tools like NoiseReduce if the wav files seem to be noisy.
 
@@ -45,6 +45,6 @@ tts --text "<YOUR TEXT HERE>" \
       --use_cuda "0" ##only if you have gpu-enabled
 ```
 
-# Demo
+## Demo
 
 WIP
