@@ -1,14 +1,11 @@
 
 import os
+import TTS
 from trainer import Trainer, TrainerArgs
-from TTS.tts.configs.glow_tts_config import GlowTTSConfig
-from TTS.tts.configs.tacotron2_config import Tacotron2Config
 from TTS.tts.models.vits import Vits, VitsAudioConfig
 from TTS.tts.configs.shared_configs import BaseDatasetConfig,CharactersConfig
 from TTS.tts.datasets import load_tts_samples
 from TTS.tts.configs.vits_config import VitsConfig
-from TTS.tts.models.glow_tts import GlowTTS
-from TTS.tts.models.tacotron2 import Tacotron2
 from TTS.tts.utils.text.tokenizer import TTSTokenizer
 from TTS.utils.audio import AudioProcessor
 #import wandb 
@@ -16,21 +13,23 @@ import logging
 logger=logging.getLogger("train_vits_recipe")
 logger.setLevel(logging.INFO)
 
-DEFAULT_SAMPLE_RATE=16000
-DEFAULT_DRIVE_FOLDER="tts-ai-results/"
+DEFAULT_SAMPLE_RATE=22000
+DEFAULT_DRIVE_FOLDER="/workspace/project/audio-processing/results/"
 os.makedirs(DEFAULT_DRIVE_FOLDER, exist_ok=True)
 
-
-data_path="tts-ai-public-figure/"
+audio_conf=VitsAudioConfig(fft_size=1024, sample_rate=DEFAULT_SAMPLE_RATE, win_length=1024, hop_length=256, num_mels=80, mel_fmin=0, mel_fmax=None)
+data_path="/workspace/project/audio-processing/tts-ai-public-figure/"
 
 characters_conf=CharactersConfig(
         pad="<PAD>",
-        bos="<BOS>",
         eos="<EOS>",
+        bos="<BOS>",
         blank="<BLNK>",
         characters="abcdefghijklmnopqrstuvwxyzáéíñóú ",
         punctuations="!¡'(),-.:;¿?",
     )
+
+
 
 #wandb.login() ##use open session to log in
 
@@ -41,7 +40,7 @@ display_name = "VITS-es-1"
 
 
 dataset_config = BaseDatasetConfig(
-    formatter="ljspeech_custom",meta_file_train="metadata.txt", path=os.path.join(data_path,"tts-dataset/"))
+    formatter="ljspeech",meta_file_train="metadata.csv", path=os.path.join(data_path,"tts-dataset/"))
 
 # INITIALIZE THE TRAINING CONFIGURATION
 # Configure the model. Every config class inherits the BaseTTSConfig.
@@ -49,23 +48,24 @@ dataset_config = BaseDatasetConfig(
 config = VitsConfig(
     run_name=display_name,
     project_name=project,
-    batch_size=16,
-    eval_batch_size=8,
+    batch_size=32,
+    eval_batch_size=16,
     num_loader_workers=4,
     num_eval_loader_workers=4,
     run_eval=True,
     test_delay_epochs=-1,
     save_checkpoints=True,
     save_n_checkpoints=2,
-    save_best_after=1000,
-    epochs=500,
+    save_best_after=500,
+    save_step=500,
+    epochs=1000,
     characters=characters_conf,
-    text_cleaner="spanish_cleaners",
+    text_cleaner="multilingual_cleaners",
     use_phonemes=True,
     phoneme_language="es-es",
     phoneme_cache_path=os.path.join(DEFAULT_DRIVE_FOLDER,"phoneme_cache"),
     compute_input_seq_cache=True,
-    print_step=25,
+    print_step=100,
     print_eval=False,
     mixed_precision=True,
     output_path=DEFAULT_DRIVE_FOLDER,
@@ -73,12 +73,11 @@ config = VitsConfig(
 #    dashboard_logger = 'wandb'
 )
 
-# ##AudioProcessor.init_from_config does not allow to set sample rate directly
-config.audio['sample_rate']=DEFAULT_SAMPLE_RATE
-
 ## Audio processor
 ap = AudioProcessor.init_from_config(config)
 #=VitsAudioConfig.init_from_config(config)
+
+#config.characters.print_logs()
 
 # INITIALIZE THE TOKENIZER
 tokenizer, config = TTSTokenizer.init_from_config(config)
