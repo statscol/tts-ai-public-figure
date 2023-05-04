@@ -11,7 +11,7 @@ import numpy as np
 
 DEFAULT_SAMPLE_RATE=22000
 OUTPUT_FOLDER="/workspace/project/audio-processing/tts-ai-public-figure/chunks"
-
+VIDEOS_PATH="/workspace/project/videos/"
 
 def std_pydub_audio(audio):
     ##taken from pydub repo
@@ -47,7 +47,7 @@ def create_chunks_mp4(file_path:str,save_to_disk:bool=False)->List[AudioSegment]
 
 if __name__=="__main__":
 
-    for vid in Path("/workspace/project/videos/").glob("*.mp4"):
+    for vid in Path(VIDEOS_PATH).glob("*.mp4"):
         create_chunks_mp4(str(vid),save_to_disk=True)
 
 
