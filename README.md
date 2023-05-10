@@ -1,18 +1,22 @@
 # TTS-ai-public-figure
 
-Training Text-to-speech using a public figure (Colombia's president Gustavo Petro) videos of public press conferences and speeches available online (mostly on youtube). This repo shows how to use the TTS library to train a custom voice model from a public figure voice. The following models were tested:
+Training Text-to-speech using a public figure (Colombia's president Gustavo Petro) videos of public press conferences and speeches available online (mostly on youtube). This repo shows how to use the TTS library to train a custom voice model from a public figure voice. 
+ 
 
-- VITS
-- Glow TTS 
+## Model
+The model used was a fine-tuned version of [VITS](https://arxiv.org/pdf/2106.06103.pdf). Given its architecture (parallel end to-end TTS) is one the most straightforward options we can use to train a voice model (Vocoder tuning is not required). 
 
-[VITS](https://arxiv.org/pdf/2106.06103.pdf), given its architecture (parallel end to-end TTS) is one the most straightforward options we can use to train a voice model. The code provided in `tts_petro_ai_latest.ipynb` can be adapted to use any of the models listed above. Just bear in mind that more ram and vram are required.
+
+## Dataset 
 
 The dataset was obtained manually, by pulling videos from youtube and partitioning them into chunks obtained from a silence threshold (`pydub.split_on_silence()`). Then, transcriptions were generated using OPEN AI's Whisper. Some manual supervision is required as this can return transcriptions in a different language. [NoiseReduce](https://github.com/timsainb/noisereduce/blob/master/noisereduce/noisereduce.py) is used to reduce noise before getting transcriptions. See `create_audio_partitions.py` for more details. 
 
 
-## Setup environment
+## Training
 
-The TTS library had a small bug when creating this repo, for that reason i had to modify the formatters and cleanners module in order to use custom datasets and cleaners. You can install my forked version using the setup_env.sh. However, feel free to install the latest TTS release (`pip install TTS`).
+### Setup environment
+
+Use the `setup_env.sh` script to install requirements. If you have issues using your custom dataset cleaner or formatter, you can follow the steps i used in a forked version of the TTS repo (modify the cleaners.py and formatters.py). However, feel free to install the latest TTS release (`pip install TTS`).
 
 
 ```bash
@@ -20,21 +24,27 @@ chmod +x setup_env.sh
 ./setup_env.sh
 ```
 
+### Preproc & Training script 
 
-## Training 
-
-Once you have collected videos from youtube in mp4 format, save them in a folder. Modify the `VIDEOS_PATH` variable in create_audio_partitions.py to point to the videos folder. Run the scripts create_audio_partitions.py and config_data.py as well, then use one of the recipes (this can be obtained from the TTS repo directly). Make sure to adjust your file paths (see variable `DEFAULT_DRIVE_FOLDER` in training scripts).
+Once you have collected the videos in mp4 format, save them in a folder. Modify the `VIDEOS_PATH` variable in create_audio_partitions.py to point to the videos folder. Run the scripts create_audio_partitions.py and config_data.py as well, then use one of the recipes (this can be obtained from the TTS repo directly) or use the fine-tuned script( this will download my weights from google drive as well as the configuration file required). Make sure to adjust your file paths (see variable `DEFAULT_DRIVE_FOLDER` in training scripts).
 
 
 ```bash
 python3 create_audio_partitions.py
 python3 config_data.py
-python3 train_vits_recipe.py
+python3 translate_audios.py 
+python3 "<fine_tune|train>"_vits_recipe.py ## fine-tuning is recommended as training from scratch will require a lot of data and iterations to get decent outputs.
+```
+
+An instance of tensorboard can be loaded for monitoring, the training script will provide the logs_dir. In a new terminal run the following.
+
+```bash
+tensorboard --logdir=<YOUR_LOG_DIR_PATH>
 ```
 
 ## Inference
 
-Use TTS build-in script for inference. It is recommended to use audio-denoising tools like NoiseReduce if the wav files seem to be noisy.
+Use TTS built-in script for inference. It is recommended to use audio-denoising tools like NoiseReduce if the wav files seem to be noisy.
 
 ```bash
 
@@ -44,6 +54,12 @@ tts --text "<YOUR TEXT HERE>" \
       --out_path audio_test.wav \
       --use_cuda "0" ##only if you have gpu-enabled
 ```
+
+
+Examples of the outputs can be found in the results/ folder
+
+
+![audio_test](https://github.com/statscol/tts-ai-public-figure/blob/main/results/output_test1200.wav)
 
 ## Demo
 

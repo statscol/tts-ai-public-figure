@@ -14,7 +14,7 @@ logger=logging.getLogger("train_vits_recipe")
 logger.setLevel(logging.INFO)
 
 DEFAULT_SAMPLE_RATE=22000
-DEFAULT_DRIVE_FOLDER="/workspace/project/audio-processing/results/"
+DEFAULT_DRIVE_FOLDER="/workspace/project/audio-processing/tts-ai-public-figure/training_results/"
 os.makedirs(DEFAULT_DRIVE_FOLDER, exist_ok=True)
 
 audio_conf=VitsAudioConfig(fft_size=1024, sample_rate=DEFAULT_SAMPLE_RATE, win_length=1024, hop_length=256, num_mels=80, mel_fmin=0, mel_fmax=None)
@@ -28,7 +28,6 @@ characters_conf=CharactersConfig(
         characters="abcdefghijklmnopqrstuvwxyzáéíñóú ",
         punctuations="!¡'(),-.:;¿?",
     )
-
 
 
 #wandb.login() ##use open session to log in

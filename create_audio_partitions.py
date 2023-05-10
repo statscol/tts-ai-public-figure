@@ -10,7 +10,7 @@ import numpy as np
 
 
 DEFAULT_SAMPLE_RATE=22000
-OUTPUT_FOLDER="/workspace/project/audio-processing/tts-ai-public-figure/chunks"
+OUTPUT_FOLDER="/workspace/project/audio-processing/tts-ai-public-figure/audios_labeled/chunks"
 VIDEOS_PATH="/workspace/project/videos/"
 
 def std_pydub_audio(audio):

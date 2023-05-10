@@ -6,22 +6,48 @@ import re
 import json
 from pathlib import Path
 import subprocess
-
+import gdown
+from pathlib import Path
 
 logger=logging.getLogger("config_data")
 logger.setLevel(logging.INFO)
 
+##Download files and checkpoints 
+OUT_PATH="/workspace/project/audio-processing/tts-ai-public-figure/training_results/"
 FOLDER_NAME="tts-dataset"
+Path(OUT_PATH).mkdir(exist_ok=True)
 
 
-subprocess.run(["unzip", "-q", "audios_labeled.zip"])
-logger.info("Unzipped files")
+if __name__=="__main__":
 
-subprocess.run(["mkdir",FOLDER_NAME])
-subprocess.run(["mv", "chunks", "tts-dataset/wavs"])
 
-logger.info("Moved Data")
+    file_id = '1-uVNiBjN9d6GBZy3jubvgq7slyEgObyr'
+    url = f'https://drive.google.com/uc?id='
+    output = f'{OUT_PATH}best_model.pth'
+    #gdown.download(f"{url}{file_id}", output, quiet=False)
 
-subprocess.run(["mv", "metadata.csv", "tts-dataset/"])
+    file_id = '1-Jot_x7bkWUE5SyAcKaaAAC-_T8DSEYe'
+    url = f'https://drive.google.com/uc?id='
+    output = f'{OUT_PATH}config.json'
+    #gdown.download(f"{url}{file_id}", output, quiet=False)
 
-logger.info("Moved Metadata")
+    #
+    file_id = '157X6TUMSCLhcWxGIHkv-oQYlImnMMdkQ'
+    url = f'https://drive.google.com/uc?id='
+    output = '/workspace/project/audio-processing/tts-ai-public-figure/audios_labeled.zip'
+    gdown.download(f"{url}{file_id}", output, quiet=False)
+
+    logger.info("Data downloaded")
+
+
+    subprocess.run(["unzip", "-q", "audios_labeled.zip"])
+    logger.info("Unzipped files")
+
+    subprocess.run(["mkdir",FOLDER_NAME])
+    subprocess.run(["mv", "audios_labeled/chunks", "tts-dataset/wavs"])
+
+    logger.info("Moved Data")
+
+    subprocess.run(["mv", "audios_labeled/metadata.csv", "tts-dataset/"])
+
+    logger.info("Moved Metadata")
