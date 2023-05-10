@@ -59,7 +59,9 @@ tts --text "<YOUR TEXT HERE>" \
 Examples of the outputs can be found in the results/ folder
 
 
-![audio_test](https://github.com/statscol/tts-ai-public-figure/raw/main/results/output_test1200ep.wav)
+https://github.com/statscol/tts-ai-public-figure/assets/47220701/d792a9c2-196f-4c5b-9408-a19a5e6d907c
+
+
 
 ## Demo
 
