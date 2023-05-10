@@ -59,7 +59,7 @@ tts --text "<YOUR TEXT HERE>" \
 Examples of the outputs can be found in the results/ folder
 
 
-![audio_test](https://github.com/statscol/tts-ai-public-figure/blob/main/results/output_test1200.wav)
+![audio_test](https://github.com/statscol/tts-ai-public-figure/raw/main/results/output_test1200ep.wav)
 
 ## Demo
 
