@@ -72,7 +72,9 @@ https://github.com/statscol/tts-ai-public-figure/assets/47220701/019163dc-2197-4
 
 Fine-tuned output:
 
-https://github.com/statscol/tts-ai-public-figure/assets/47220701/d792a9c2-196f-4c5b-9408-a19a5e6d907c
+
+
+https://github.com/statscol/tts-ai-public-figure/assets/47220701/c5363de7-4a67-460f-bb30-c5849837d74d
 
 
 
