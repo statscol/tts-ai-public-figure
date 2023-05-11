@@ -63,6 +63,15 @@ tts --text "<YOUR TEXT HERE>" \
 Examples of the outputs can be found in the results/ folder
 
 
+Original base model voice output:
+
+
+https://github.com/statscol/tts-ai-public-figure/assets/47220701/019163dc-2197-4bd6-ae55-d8a08918514d
+
+
+
+Fine-tuned output:
+
 https://github.com/statscol/tts-ai-public-figure/assets/47220701/d792a9c2-196f-4c5b-9408-a19a5e6d907c
 
 
