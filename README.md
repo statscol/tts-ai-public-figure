@@ -14,9 +14,13 @@ The dataset was obtained manually, by pulling videos from youtube and partitioni
 
 ## Training
 
+
 ### Setup environment
 
-Use the `setup_env.sh` script to install requirements. If you have issues using your custom dataset cleaner or formatter, you can follow the steps i used in a forked version of the TTS repo (modify the cleaners.py and formatters.py). However, feel free to install the latest TTS release (`pip install TTS`).
+
+- [x] A GPU is needed for training. While building this repo, Kaggle notebooks and a local instance with a single RTX 3080 12 Gb | 16 Gb ram were used for experimentation.
+
+- [x] Use the `setup_env.sh` script to install requirements. If you have issues using your custom dataset cleaner or formatter, you can follow the steps i used in a forked version of the TTS repo (modify the cleaners.py and formatters.py). However, feel free to install the latest TTS release (`pip install TTS`).
 
 
 ```bash
@@ -44,7 +48,7 @@ tensorboard --logdir=<YOUR_LOG_DIR_PATH>
 
 ## Inference
 
-Use TTS built-in script for inference. It is recommended to use audio-denoising tools like NoiseReduce if the wav files seem to be noisy.
+Use TTS built-in script for inference or its API. For better results it is recommended to use audio-denoising tools like NoiseReduce if the wav files seem to be noisy.
 
 ```bash
 
@@ -65,4 +69,4 @@ https://github.com/statscol/tts-ai-public-figure/assets/47220701/d792a9c2-196f-4
 
 ## Demo
 
-WIP
+A demo app can be found in [this](https://huggingface.co/spaces/jhonparra18/petro-tts-app) HuggingFace Space. This will be updated with the latest checkpoint.
