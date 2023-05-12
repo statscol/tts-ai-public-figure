@@ -31,17 +31,16 @@ if __name__=="__main__":
     output = f'{OUT_PATH}config.json'
     #gdown.download(f"{url}{file_id}", output, quiet=False)
 
-    #
     file_id = '157X6TUMSCLhcWxGIHkv-oQYlImnMMdkQ'
     url = f'https://drive.google.com/uc?id='
-    output = '/workspace/project/audio-processing/tts-ai-public-figure/audios_labeled.zip'
-    gdown.download(f"{url}{file_id}", output, quiet=False)
+    output = '/workspace/project/audio-processing/tts-ai-public-figure/audios_labeled.zip' 
+    gdown.download(f"{url}{file_id}", output, quiet=False)     #comment this line if you already have your own audio chunks
 
     logger.info("Data downloaded")
 
 
-    subprocess.run(["unzip", "-q", "audios_labeled.zip"])
-    logger.info("Unzipped files")
+    subprocess.run(["unzip", "-q", "audios_labeled.zip"])     #comment this line if you already have your own audio chunks
+    logger.info("Unzipped files")       #comment this line if you already have your own audio chunks
 
     subprocess.run(["mkdir",FOLDER_NAME])
     subprocess.run(["mv", "audios_labeled/chunks", "tts-dataset/wavs"])
