@@ -1,11 +1,11 @@
 # TTS-ai-public-figure
 
-Training Text-to-speech using Colombia's president Gustavo Petro public press conferences and speeches available online (mostly on youtube). This repo shows how to use the TTS library to train a custom voice model from a public figure voice. 
+Training Text-to-speech using Colombia's president Gustavo Petro public press conferences and speeches available online (mostly on youtube). This repo shows how to use the TTS library to train|fine-tune a custom voice model from a public figure's voice. 
  
 
 ## Model
-The model used was a fine-tuned version of [VITS](https://arxiv.org/pdf/2106.06103.pdf). Given its architecture (parallel end to-end TTS) is one the most straightforward options we can use to train a voice model (Vocoder tuning is not required). 
-
+The model used was a fine-tuned version of [VITS](https://arxiv.org/pdf/2106.06103.pdf). The base model was one of the pretrained models in spanish `tts_models--es--css10--vits`.
+Given its architecture (parallel end to-end TTS) VITS is one the most straightforward options we can use to train a voice model (Vocoder tuning is not required). 
 
 ## Dataset 
 
@@ -80,4 +80,4 @@ https://github.com/statscol/tts-ai-public-figure/assets/47220701/c5363de7-4a67-4
 
 ## Demo
 
-A demo app can be found in [this](https://huggingface.co/spaces/jhonparra18/petro-tts-app) HuggingFace Space. This will be updated with the latest checkpoint.
+A demo app can be found in [this](https://huggingface.co/spaces/jhonparra18/petro-tts-app) HuggingFace Space. It contains the latest checkpoint.
